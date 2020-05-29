@@ -1,4 +1,4 @@
-# Onboarding Existing Devices/Consolidate Device-Level Configlets
+# Consolidate Device-Level Configlets
 
 - [Description](#description)
 - [Executing Script](#executing-script)
