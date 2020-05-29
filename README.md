@@ -11,7 +11,7 @@ This script utilizes CVP's REST API to consolidate any configlets applied to a d
 
 ## Executing Script
 To execute the script, navigate to the directory the `main.py` file is and execute the following command:
-```python main.py --user <username> --password <password> --cvp <cvp-ip-address> --target <device-or-container-name> --mode ```
+```python main.py --user <username> --password <password> --cvp <cvp-ip-address> --target <device-or-container-name> --mode extended```
 
 ### Script Options
 ```
