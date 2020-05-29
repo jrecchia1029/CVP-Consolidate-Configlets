@@ -111,7 +111,7 @@ def updateInCVP(cvp, name, config, serial_number, apply=True):
         except:
             return []
 
-def consolidate_configlets(cvp, device_dict, target_container, image_bundle, include_container_configlets=False):
+def consolidate_configlets(cvp, device_dict, include_container_configlets=False):
     '''
         Creates a static configlet of the reconcile config produced as if no configlets are applied to the device
         Then deploys device into proper container based off of first three characters of device hostname and applies previously generated configlet
@@ -136,7 +136,7 @@ def consolidate_configlets(cvp, device_dict, target_container, image_bundle, inc
 
     #keys of configlets we'll pretend are applied to a device when we generate a reconcile config
     if include_container_configlets == True:
-        container_configlet_keys = [ configlet["key"] for configlet in cvp.api.get_configlets_inherited_from_containers(target_container) ]
+        container_configlet_keys = [ configlet["key"] for configlet in cvp.api.get_configlets_inherited_from_containers(device_dict['containerName']) ]
     else:
         container_configlet_keys = []
 
