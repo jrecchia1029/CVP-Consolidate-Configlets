@@ -10,8 +10,10 @@
 This script utilizes CVP's REST API to consolidate any configlets applied to a device at the device-level in CVP's Provisioning page to a single device level configlet:
 
 ## Executing Script
-To execute the script, navigate to the directory the `main.py` file is and execute the following command:
-```python main.py --user <username> --password <password> --cvp <cvp-ip-address> --target <device-or-container-name> --mode extended```
+**It is best to run a compliance check on the target device or container in CVP before executing this script.**
+
+To execute the script, navigate to the directory the `consolidate.py` file is and execute the following command:
+```python consolidate.py --user <username> --password <password> --cvp <cvp-ip-address> --target <device-or-container-name> --mode extended --cancel True```
 
 ### Script Options
 ```
@@ -47,4 +49,5 @@ optional arguments:
 3.  A configlet named <switch-hostname> containing all device-level configuration (and no configuration that would be inherited from containers) is created/updated in CVP.
 4.  The script will create an 'Update Config' task by removing any configlets applied to the device.
 5.  The script will update that 'Update Config' task by applying the device-level configlet to the device.
+6.  The script will then optionally cancel the 'Update Config' task or leave it be.
 
