@@ -111,7 +111,7 @@ def updateInCVP(cvp, name, config, serial_number, apply=True):
         except:
             return []
 
-def deploy_device_with_no_configlets(cvp, device_dict, target_container, image_bundle, include_container_configlets=False):
+def consolidate_configlets(cvp, device_dict, target_container, image_bundle, include_container_configlets=False):
     '''
         Creates a static configlet of the reconcile config produced as if no configlets are applied to the device
         Then deploys device into proper container based off of first three characters of device hostname and applies previously generated configlet
@@ -197,15 +197,6 @@ def deploy_device_with_no_configlets(cvp, device_dict, target_container, image_b
         device_level_configlets = cvp.api.get_configlets_by_netelement_id(device_id)["configletList"]
         cvp.api.remove_configlets_from_device("Removed by script", device_dict, device_level_configlets)
         cvp.api.apply_configlets_to_device("Added by script", device_dict, configlets_to_apply)
-    else:
-        if target_container != "" and cvp.api.get_container_by_name(target_container) is None:
-            print("{} - Could not find destination container for {}".format(device_dict["hostname"], device_dict["hostname"]))
-            return
-        
-        if image_bundle != "" and cvp.api.get_image_bundle_by_name(image_bundle) is None:
-            print("{} - Could not find image bundle for {}".format(device_dict["hostname"], device_dict["hostname"]))
-            return
-        cvp.api.deploy_device(device_dict, target_container, configlets=configlets_to_apply, image=image_bundle)
     return
 
 def parseArgs():
@@ -263,12 +254,7 @@ def main():
 
     for switch in switches:
         #Check to see if switch in spreadsheet and get VRF 
-        try:
-            switch_details = switch_info_dict[switch["hostname"]]
-        except KeyError:
-            print("Could not find {}'s serial number in spreadsheet".format(switch["hostname"]))
-            continue
-        deploy_device_with_no_configlets(cvp, switch, switch_details["Target Container"], switch_details["Image Bundle"], include_container_configlets=True)
+        consolidate_configlets(cvp, switch, include_container_configlets=True)
 
 if __name__ == "__main__":
     main()
