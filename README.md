@@ -16,7 +16,7 @@ To execute the script, navigate to the directory the `main.py` file is and execu
 ### Script Options
 ```
 usage: consolidate.py [-h] [-u USER] [-p PASSWORD] [-host CVP] [-t TARGET]
-                      [-m MODE]
+                      [-m MODE] [-c CANCEL]
 
 Provisions devices in CVP
 
@@ -33,6 +33,9 @@ optional arguments:
                         will determine whether to fetch the devices whose
                         parent container is the target or all devices under
                         the target
+  -c CANCEL, --cancel CANCEL
+                        True/False. If set to true, will cancel any tasks
+                        created by applying new configlet
 ```
 
 - Note that if you do not wish to enter a password value in plain text, you may leave the password field out of the initial execution command and will be prompted for it when the script is executing.
@@ -40,7 +43,7 @@ optional arguments:
 ## Workflow
 
 1.  Script gets devices from CVP based on target argument.
-2.  For each device retrieved, the script checks to see if the device is streaming to CVP.  If so, the script continues to process the switch.
+2.  For each device retrieved, the script checks to see if the device is streaming to CVP and if its configuration is in compliance.  If so, the script continues to process the switch.
 3.  A configlet named <switch-hostname> containing all device-level configuration (and no configuration that would be inherited from containers) is created/updated in CVP.
 4.  The script will create an 'Update Config' task by removing any configlets applied to the device.
 5.  The script will update that 'Update Config' task by applying the device-level configlet to the device.
