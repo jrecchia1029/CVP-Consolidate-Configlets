@@ -193,7 +193,10 @@ def main():
                 switches.append(device)
                 break
     print("Successfully retrieved inventory")
-    cancel_tasks = True if re.match(r'(?i)True', args.cancel) else False
+    if type(args.cancel) != bool and re.match(r'(?i)True', args.cancel):
+        cancel_tasks = True
+    else:
+        cancel_tasks = False
     for switch in switches:
         #Check to see if switch in spreadsheet and get VRF 
         consolidate_configlets(cvp, switch, include_container_configlets=True, cancel_tasks=cancel_tasks)
